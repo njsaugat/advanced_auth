@@ -27,3 +27,7 @@ class Util:
         uid = hashlib.sha256(uid_string.encode()).hexdigest()
 
         return uid
+
+    @staticmethod
+    def generate_otp():
+        return random.randint(100000, 999999)
