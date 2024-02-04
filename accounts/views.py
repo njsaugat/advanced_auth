@@ -1,17 +1,17 @@
 from django.contrib.auth import authenticate
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.renderers import UserRenderer
-from accounts.serializers import (SendPasswordResetEmailSerializer,
+from accounts.serializers import (EmailSerializer,
+                                  SendPasswordResetEmailSerializer,
                                   UserChangePasswordSerializer,
-                                  UserLoginSerializer,
+                                  UserLoginSerializer, UserOTPSerializer,
                                   UserPasswordResetSerializer,
                                   UserProfileSerializer,
-                                  UserOTPSerializer,
                                   UserRegistrationSerializer)
 
 
@@ -96,6 +96,10 @@ class VerifyOTP(APIView):
     
     permission_classes=[AllowAny]
     def post(self,request):
+        email_serializer=EmailSerializer(data=request.data)
+        if not email_serializer.is_valid(raise_exception=True):
+            return Response(email_serializer.errors,status=status.HTTP_400_BAD_REQUEST)            
+
         otp_serializer=UserOTPSerializer(data=request.data)
         if not otp_serializer.is_valid(raise_exception=True):
             return Response(otp_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
