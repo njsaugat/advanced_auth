@@ -27,8 +27,6 @@ SECRET_KEY = 'django-insecure-o_=d)&hpq%kr)h7^qd6lg-q65@v^_)@8s4!7stx$0l$pi5f9fx
 DEBUG = True
 
 ALLOWED_HOSTS = []
-print("----->",config('EMAIL_USER'))
-print("----->",config('EMAIL_PASS'))
 
 # Application definition
 
@@ -166,7 +164,7 @@ SIMPLE_JWT={
     
 }
 
-PASSWORD_RESET_TIMEOUT=900
+PASSWORD_RESET_TIMEOUT=720000
 
 CORS_ALLOWED_ORIGINS=[
     'http://localhost:3000',
